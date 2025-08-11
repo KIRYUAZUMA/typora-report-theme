@@ -9,7 +9,7 @@
 **本主题的目的更偏向输出为其他文件，故**
 
 + 没有更改任何编辑器的外观，左侧的各种栏全部为默认状态。
-+ 由于Typora的渲染问题，使用下一节的类的HTML代码***不会***在编辑器中被正确显示，只有输出为PDF之后才能显示为正确的形式。
++ 由于Typora的渲染问题，使用下一节的类的HTML代码**不会**在编辑器中被正确显示，只有输出为PDF之后才能显示为正确的形式。
 
 **有关语言问题**
 
@@ -83,59 +83,6 @@
 + 表格使用了学术写作中常用的格式
 + 为有序列表的前三级添加了不同的编号（代码部分源自[typora-latex-theme](https://github.com/Keldos-Li/typora-latex-theme))
 
-### 致谢
-
-```css
-/* 无序列表 */
-#write ul {
-  list-style: disc;
-}
-#write ul ul {
-  /*list-style: circle;*/
-  /* 请勿删除“–”后的空格, 他们对缩进有一定影响, 下同 */
-  list-style: "–   ";
-}
-#write ul ul ul {
-  list-style: "◦  ";
-}
-
-/* 有序列表 */
-#write ol {
-  list-style: decimal;
-}
-#write ol ol {
-  counter-reset: liist;
-  list-style: none;
-}
-#write ol ol > li {
-  counter-increment: liist;
-  position: relative;
-}
-#write ol ol > li::before {
-  content: "(" counter(liist, lower-alpha) ")";
-  position: absolute;
-  left: -1.8em;
-}
-#write ol ol ol {
-  counter-reset: liiist;
-  list-style: none;
-  margin: 0;
-}
-#write ol ol ol > li {
-  counter-increment: liiist;
-  position: relative;
-}
-#write ol ol ol > li::before {
-  content: counter(liiist, lower-roman) ".";
-  align-self: flex-end;
-  position: absolute;
-  left: -4.5em;
-  /* -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;*/
-  /* 为了让项目编号是重新用句点对齐而不是左对齐 */
-  width: 4em;
-  text-align: right;
-}
-```
+## 致谢
+使用了
 
