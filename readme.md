@@ -1,0 +1,141 @@
+# 为在日大学生report写作准备的以输出为目的的Typora主题
+
+笔者在前一个学期写report时，Word无论是写作体验还是格式编辑都令作者感到十分不适。于是试图使用markdown+主题来解决这一问题。然而，笔者未找到任何一个相关的主题。绝大多数与大学报告有关的主题都是为了中文报告服务的，而日语报告的写作要求和中文报告的写作要求相差甚大，几乎无法通过简单的改变实现。
+
+于是笔者决定自己编写一个主题，同时添加一些类，以使用部分word中方便的自动化功能，同时避免使用HTML代码调整字体的格式。
+
+## Point
+
+**本主题的目的更偏向输出为其他文件，故**
+
++ 没有更改任何编辑器的外观，左侧的各种栏全部为默认状态。
++ 由于Typora的渲染问题，使用下一节的类的HTML代码***不会***在编辑器中被正确显示，只有输出为PDF之后才能显示为正确的形式。
+
+**有关语言问题**
+
++ 由于中文和日文的部分汉字共用Unicode代码，故此主题**完全不能**用于显示中文，显示效果极为奇怪。由于笔者有过尝试给中文主题适配日语的极糟糕的经历，故也不推荐试图给本主题适配中文。
++ 作者本人使用日语MacOS，不能确定其他语言的MacOS和windows是否会出现bug。
++ 也许会添加一个日文readme文件，但暂时没有计划。
+
+## 新添加的类
+
+### 作者信息 "author-info"
+
+添加HTML代码
+```HTML
+<div class="author-info">
+  <p>所属：理学部化学科</p>
+  ...
+</div>
+```
+会生成整体靠右块内居中的作者信息あ
+
+### 分页符 "page-break"
+
+使用如下HTML代码，
+```HTML
+<div class="page-break"></div>
+```
+换页
+
+### **分隔线**改造
+
+同时更改了markdown语言中的**分隔线**作为换页符号，如需要在报告中使用分隔线，可以在代码中搜索「**将水平分割线改造为分页符**」将之下的两段代码注释掉。
+
+### 图表序号 “figure-caption“ ”table-caption“
+
+使用如下HTML代码，
+
+```HTML
+<span class="figure-caption">图标题</span>
+```
+及
+```HTML
+<span class="table-caption">表标题</span>
+```
+自动生成如下样式的图表的序号
+
+**图n** 图标题
+
+请注意使用span元素而不是p元素，p元素并不会产生bug，但如果希望在图表标题中使用LaTeX代码，p元素内的markdown语法和LaTeX语法不能被正常识别。
+
+### 参考文献 "reference"
+
+使用如下HTML代码，
+``` HTML
+<div class="reference">
+  <p>参考文献1</p>
+  <p>参考文献2</p>
+  ...
+</div>
+```
+生成如下的形式
+参考文献
+[1]参考文献1
+[2]参考文献2
+...
+
+## 其他特性
+
++ 一级标题用作全文标题，二级标题开始自动编号。（代码部分源自[Typora文档](https://support.typora.io/Auto-Numbering/)）
+  + 如果不需要全文标题，也请在最开始添加一个全文标题，之后用分页符在下一页开始写作。没有一级标题，标题计数器可能会出bug
+  + 一级标题和二级标题使用Gothic体，之后的标题使用明朝体。
++ 表格使用了学术写作中常用的格式
++ 为有序列表的前三级添加了不同的编号（代码部分源自[typora-latex-theme](https://github.com/Keldos-Li/typora-latex-theme))
+
+### 致谢
+
+```css
+/* 无序列表 */
+#write ul {
+  list-style: disc;
+}
+#write ul ul {
+  /*list-style: circle;*/
+  /* 请勿删除“–”后的空格, 他们对缩进有一定影响, 下同 */
+  list-style: "–   ";
+}
+#write ul ul ul {
+  list-style: "◦  ";
+}
+
+/* 有序列表 */
+#write ol {
+  list-style: decimal;
+}
+#write ol ol {
+  counter-reset: liist;
+  list-style: none;
+}
+#write ol ol > li {
+  counter-increment: liist;
+  position: relative;
+}
+#write ol ol > li::before {
+  content: "(" counter(liist, lower-alpha) ")";
+  position: absolute;
+  left: -1.8em;
+}
+#write ol ol ol {
+  counter-reset: liiist;
+  list-style: none;
+  margin: 0;
+}
+#write ol ol ol > li {
+  counter-increment: liiist;
+  position: relative;
+}
+#write ol ol ol > li::before {
+  content: counter(liiist, lower-roman) ".";
+  align-self: flex-end;
+  position: absolute;
+  left: -4.5em;
+  /* -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;*/
+  /* 为了让项目编号是重新用句点对齐而不是左对齐 */
+  width: 4em;
+  text-align: right;
+}
+```
+

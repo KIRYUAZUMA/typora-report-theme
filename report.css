@@ -1,0 +1,337 @@
+/*页面设置*/
+#write {
+  counter-reset: figure-counter table-counter !important;
+  max-width: 159.2mm;/*最大宽度为A4纸宽度减两边页边距的长度*/
+  background-color: white;
+}
+/*字体定义*/
+:root{
+  --base-Gothic-font:"Cantarell", "YuGothic";
+  --base-Mincho-font:"Times New Roman", "YuMincho";
+}
+/*==段落==*/
+p {
+  text-indent: 1em;
+  font-family: var(--base-Mincho-font);
+  font-size: 11pt;
+}
+
+/*引用段*/
+blockquote {
+  border-left: none;
+  padding-left: 0;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  margin-left: 2em;
+  margin-right: 2em;
+  font-size: 0.9em; 
+  font-style: normal;
+}
+
+blockquote p{
+  text-indent: 0;
+}
+
+
+/* ==新定义的标签==*/
+
+/*作者信息*/
+.author-info {
+  float: right; /* 让整个块移动到右边 */
+  text-align: center; /* 让块内部的文字居中对齐 */
+  size:12pt;
+  color:#000000c0
+}
+
+.author-info p {
+  margin: 0.5em 0;
+  font-family: var(--base-Gothic-font);
+}
+
+/* 清除.author-info 后面的任何元素右侧的浮动 */
+.author-info + * {
+  clear: right;
+}
+
+/*分页符*/
+
+@media print {
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+}
+
+/*将水平分割线改造为分页符*/
+hr {
+  border: none;
+  border-top: 1px dotted #ccc; 
+  height: 1px;
+  margin: 3em 0; 
+}
+
+@media print {
+  hr {
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    page-break-after: always;  
+    break-after: page;       
+  }
+}
+
+/*图表序号*/
+
+span.figure-caption,
+span.table-caption {
+  display: block; 
+  text-align: center;
+  color: #000000ae;
+  font-size: 10pt;
+}
+p.figure-caption,
+p.table-caption{
+  text-align: center;
+  color: #000000ae;
+  font-size: 10pt;
+}
+
+.figure-caption {
+  counter-increment: figure-counter;
+  margin-top: -0.8em;
+}
+.table-caption {
+  counter-increment: table-counter;
+  margin-bottom: -0.8em;
+}
+
+.figure-caption::before {
+  content: "図" counter(figure-counter) "　";
+  font-weight: bold;
+}
+.table-caption::before {
+  content: "表" counter(table-counter) "　";
+  font-weight: bold;
+}
+
+
+/* 参考文献自动编号 */
+、
+.reference {
+  counter-reset: ref-counter;
+  margin-top: 2em
+}
+
+.reference > p {
+  counter-increment: ref-counter;
+
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+
+  padding-left: 2em;
+  text-indent: -1.67em; 
+}
+
+.reference > p::before {
+  content: "[" counter(ref-counter) "] ";
+  font-weight: bold;
+}
+
+.reference::before {
+  content: "参考文献"; 
+  display: block;
+  font-family: var(--base-Gothic-font);
+  font-size: 12pt;
+  font-weight: normal;
+}
+
+/*==列表==*/
+
+li p {
+  text-indent: 0 !important;
+}
+
+#write ul {
+  list-style: disc;
+}
+#write ul ul {
+  list-style: "–   ";
+}
+#write ul ul ul {
+  list-style: "◦  ";
+}
+
+/* 有序列表 */
+#write ol {
+  list-style: decimal;
+}
+#write ol ol {
+  counter-reset: liist;
+  list-style: none;
+}
+#write ol ol > li {
+  counter-increment: liist;
+  position: relative;
+}
+#write ol ol > li::before {
+  content: "(" counter(liist, lower-alpha) ")";
+  position: absolute;
+  left: -1.8em;
+}
+#write ol ol ol {
+  counter-reset: liiist;
+  list-style: none;
+  margin: 0;
+}
+#write ol ol ol > li {
+  counter-increment: liiist;
+  position: relative;
+}
+#write ol ol ol > li::before {
+  content: counter(liiist, lower-roman) ".";
+  align-self: flex-end;
+  position: absolute;
+  left: -4.5em;
+  width: 4em;
+  text-align: right;
+}
+
+#write ol,
+#write ul {
+  padding-inline-start: 2em;
+}
+
+#write li {
+  position: relative;
+}
+
+
+
+/*==标题==*/
+
+#write h1 {
+  font-family: var(--base-Gothic-font);
+  font-size: 14pt;
+  font-weight: normal;
+	text-align: center;
+	text-transform: uppercase;
+}
+#write h2 {
+  font-family: var(--base-Gothic-font);
+  font-size: 12pt;
+  font-weight: normal;
+}
+#write h3 {
+  font-family: var(--base-Gothic-font);
+  font-size: 12pt;
+  font-weight: normal;
+}
+#write h4 {
+  font-family: var(--base-Mincho-font);
+  font-size: 12pt;
+  font-weight: normal;
+}
+#write h5 {
+  font-family: var(--base-Mincho-font);
+  font-size: 12pt;
+  font-weight: normal;
+}
+#write h6 {
+  font-family: var(--base-Mincho-font);
+  font-size: 12pt;
+  font-weight: normal;
+}
+
+/*标题自动加序号*/
+#write {
+  counter-reset: h1 /* H1计数器仍然需要重置，以便后续级别可以基于它进行计数 */
+}
+
+h1 {
+  counter-reset: h2
+}
+
+h2 {
+  counter-reset: h3
+}
+
+h3 {
+  counter-reset: h4
+}
+
+h4 {
+  counter-reset: h5
+}
+
+h5 {
+  counter-reset: h6
+}
+
+
+#write h2:before {
+  counter-increment: h2;
+  content: counter(h2) "."
+}
+
+#write h3:before,
+h3.md-focus.md-heading:before {
+  counter-increment: h3;
+  content: counter(h2) "." counter(h3) "." 
+}
+
+#write h4:before,
+h4.md-focus.md-heading:before {
+  counter-increment: h4;
+  content: counter(h2) "." counter(h3) "." counter(h4) ". " 
+}
+
+#write h5:before,
+h5.md-focus.md-heading:before {
+  counter-increment: h5;
+  content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". " 
+}
+
+#write h6:before,
+h6.md-focus.md-heading:before {
+  counter-increment: h6;
+  content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". " 
+}
+
+
+/*==表格==*/
+
+:root {
+  /* 将颜色和边框定义为变量，方便统一修改 */
+  --table-border-color: #333;       /* 主要线条颜色 */
+  --table-stripe-background: #f8f8f8; /* 斑马条纹背景色 */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  border-spacing: 0;
+  border-top: 2px solid var(--table-border-color);
+  border-bottom: 2px solid var(--table-border-color);
+}
+
+thead {
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+th, td {
+  border: none;
+  padding: 0.6em 0.8em;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--table-stripe-background);
+}
+
